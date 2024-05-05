@@ -1,24 +1,56 @@
-import logo from './logo.svg';
+import {useState} from "react";
+import {data} from "./data";
 import './App.css';
+import Carousel from "./Carousel";
 
 function App() {
+ 
+ 
+const [gift, setGift]=useState(data);
+
+const removeGift = (id) =>{
+  let newGift = gift.filter((gift) => gift.id!==id);
+  setGift(newGift)
+}
+  
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <div className="container" >
+      <h1>Wish list of {gift.length} gifts</h1>
+      </div>
+
+{gift.map ((element => {
+  const {id, item, images}=element;
+
+return (
+  <div key={id} >
+  <div className="container header" >
+     <h2>{id} - {item}</h2>
+     </div>
+ 
+ <div className="container">
+<Carousel images ={images}/>
+ </div>
+ 
+ 
+<div className="container" >
+    <button className="btn" onClick ={() => removeGift (id)}>Remove</button>
     </div>
+        </div>
+
+
+)
+
+
+}))}
+
+<div className="container" >
+    <button className="btn" onClick ={() => setGift([])}>DELETE ALL</button>
+    </div>
+ 
+        </div>
   );
 }
 
